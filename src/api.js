@@ -27,3 +27,18 @@ function checkPoint(lat, lng, callback) {
         callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
+
+function checkAll(callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `/checkAll`,
+        "method": "GET"
+    }
+
+    $.ajax(settings).done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}

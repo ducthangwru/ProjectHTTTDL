@@ -1,0 +1,1 @@
+http://opendata.hcmgis.vn:80/geoserver/wfs?format_options=charset%3AUTF-8&typename=geonode%3Avietnam_provinces&outputFormat=SHAPE-ZIP&version=1.0.0&service=WFS&request=GetFeature

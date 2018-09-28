@@ -9,27 +9,74 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="leaflet.js"></script>
     <script src="jquery-3.2.0.min.js"></script>
+    <script src="numeral.js"></script>
     <title>Leaflet</title>
     <style>
         #map123 {
             height: 100vh;
         }
+
+        .leaflet-popup-content {
+            width: 250px;
+            height: 260px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div id="content">
+    <div class="row" style="padding: 2%">
+        <div class="col-md-3">
+            <div class="row" style="text-align: center; margin-bottom: 5%">
+                <h3>Tình hình bầu cử tại Việt Nam</h3>
+                <h4 id="province">Toàn quốc</h4>
+            </div>
 
+            <div class="row" style="text-align: center;">
+                <div class="col-md-6">
+                    <img src="images/vote1.jpg" width="100px" height="100px" alt="">
+                    <label>Mr. Nguyễn Đức Thắng</label>
+                </div>
+                <div class="col-md-6">
+                    <img src="images/vote1.jpg" width="100px" height="100px" alt="">
+                    <label>Mr. Đinh Việt Cường</label>
                 </div>
             </div>
-            <div class="col-md-9">
-                <div id="map123"></div>
+
+            <div class="row" style="padding: 5%">
+                <div id="progress1" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar">
+                        <strong id="strong1" style="color: black;">20 %</strong>
+                </div>
+                <div id="progress2" class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar">
+                    <strong id="strong2" style="color: black;">80 %</strong>
+                </div>
             </div>
+
+            <div class="row" style="padding: 5%">
+                <div>Dân số: <b id="danso"></b></div>
+            </div>
+
+            <div class="row" style="padding-left: 5%">
+                <div>Số vote 1: <b id="vote1"></b></b></div>
+            </div>
+
+            <div class="row" style="padding-left: 5%">
+                <div>Số vote 2: <b id="vote2"></b></b></div>
+            </div>
+
+            <div class="row" style="padding-left: 5%">
+                <div>Chưa vote: <b id="chuavote"></b></b></div>
+            </div>
+
+            <div class="row" style="padding: 5%; text-align: center">
+                <button id="btnToanQuoc" class="btn btn-primary">Toàn quốc</button>
+            </div>
+            
+        </div>
+        <div class="col-md-9">
+            <div id="map123"></div>
         </div>
     </div>
+
     <script src="api.js"></script>
     <script src="index.js"></script>
 </body>
