@@ -33,5 +33,21 @@ router.get('/checkAll', async (req, res) => {
     })
 })
 
+router.get('/checkprovince', async (req, res) => {
+    let id = req.query.id
+
+    query.checkProvince(id, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows[0]
+            })
+        }
+    })
+})
+
 
 module.exports = router;

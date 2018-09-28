@@ -12,5 +12,11 @@ function checkAll(callback) {
       })
 }
 
+function checkProvince(id, callback) {
+    db.query(`SELECT ten, gid, danso, vote1, vote2 FROM vietnam_provinces where objectid = ${id}`, (err, res) => {
+        callback(err, res)
+      })
+}
 
-module.exports = {checkPoint, checkAll}
+
+module.exports = {checkPoint, checkAll, checkProvince}

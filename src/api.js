@@ -42,3 +42,19 @@ function checkAll(callback) {
         callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
+
+
+function checkProvince(id, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `/checkprovince?id=${id}`,
+        "method": "GET"
+    }
+
+    $.ajax(settings).done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
