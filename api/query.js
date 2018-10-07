@@ -1,17 +1,21 @@
 const db = require('../utils/connect')
 
+// Hàm lấy query lấy thông tin địa lý theo tọa độ
+//callback là hàm trả về data khi đã lấy dữ liệu thành công
 function checkPoint(lat, lng, callback) {
     db.query(`SELECT ten, gid, danso, vote1, vote2 FROM vietnam_provinces where st_contains(geom, ST_GeomFromText('POINT(${lng} ${lat})'))`, (err, res) => {
         callback(err, res)
       })
 }
 
+//Hàm lấy thông tin tổng bầu cử toàn quốc
 function checkAll(callback) {
     db.query(`select sum(danso) as danso, sum(vote1) as vote1, sum(vote2) as vote2, (sum(danso) - sum(vote1) -sum(vote2)) as chuavote from vietnam_provinces`, (err, res) => {
         callback(err, res)
       })
 }
 
+//Hàm lấy thông tin địa lý theo id
 function checkProvince(id, callback) {
     db.query(`SELECT ten, gid, danso, vote1, vote2 FROM vietnam_provinces where objectid = ${id}`, (err, res) => {
         callback(err, res)

@@ -1,27 +1,17 @@
 var mymap;
 var lyrOSM;
+var OSM;
 var listMaker = []
 
 $(document).ready(function () {
     //Tao va add Map from JSON
-    mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5,crs: L.CRS.EPSG4326});
+    mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5});
     getGeoJSON((data) => {
-        lyrOSM = L.geoJson(data, {
-            style: function(feature) {
-                switch (feature.type) {
-                    case 'Feature':
-                        checkProvince(feature.properties.OBJECTID, (data) => {
-                            let vote = data.data.vote1 + data.data.vote2
-                            let percentVote1 = (data.data.vote1 / vote) * 100
-                            if(percentVote1 >= 50)
-                                return {color: "#ff0000"};
-                            else 
-                                return {color: "#0000ff"};
-                        })
-                }
-            }
-        });
-        mymap.addLayer(lyrOSM); 
+        lyrOSM = L.geoJson(data);
+        OSM = L.tileLayer.provider('Stamen.Watercolor');
+        // mymap.addLayer(OSM);
+        // mymap.addLayer(lyrOSM); 
+        L.layerGroup([OSM, lyrOSM]).addTo(mymap);
     })
 
     resetAll();

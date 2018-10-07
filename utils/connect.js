@@ -8,4 +8,5 @@ const pool = new Pool({
   port: 5432,
 })
 
+//thiết lập connect với PostgreSQL require('pg') là thư viện thôi
 module.exports = pool;

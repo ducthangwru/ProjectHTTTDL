@@ -1,3 +1,6 @@
+//File này là viết hàm ajax gọi api đã thiết lập
+
+// Hàm lấy file GeoJSON
 function getGeoJSON(callback) {
     let settings = {
         "async": true,
@@ -13,6 +16,7 @@ function getGeoJSON(callback) {
     });
 }
 
+//Hàm lấy thông tin địa lý khi gửi tọa độ lên
 function checkPoint(lat, lng, callback) {
     let settings = {
         "async": true,
@@ -28,6 +32,7 @@ function checkPoint(lat, lng, callback) {
     });
 }
 
+//Hàm lấy thông tin bầu cử toàn quốc
 function checkAll(callback) {
     let settings = {
         "async": true,
@@ -43,7 +48,7 @@ function checkAll(callback) {
     });
 }
 
-
+//Hàm lấy thông tin địa lý theo id tỉnh
 function checkProvince(id, callback) {
     let settings = {
         "async": true,
