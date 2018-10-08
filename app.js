@@ -3,10 +3,19 @@ var path = require("path")
 var fs = require("fs")
 var router = require('./api/router')
 var app = express();
+var bodyParser = require('body-parser')
 let port = 8888;
 
 //public folder src lên (check bằng cách bật f12 lên trình duyệt => source)
 app.use(express.static(path.join(__dirname, 'src')));
+
+app.use(bodyParser.json());       
+app.use(bodyParser.urlencoded({   
+    extended: true
+}));
+app.use(bodyParser.json({ extended : true}));
+app.use(bodyParser.urlencoded({ extended : true}));
+
 
 //Thiết lập nếu nhập dạng localhost:8888/ thì là trả về file index.html
 app.get('/', function (req, res) {

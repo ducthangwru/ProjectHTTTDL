@@ -39,6 +39,24 @@ router.get('/checkAll', async (req, res) => {
     })
 })
 
+router.post('/login', async(req, res) => {
+    console.log(req.body)
+    let username = req.body.username
+    let password = req.body.password
+
+    query.login(username, password, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows[0]
+            })
+        }
+    })
+})
+
 
 //Tạo api nếu gửi lên phương thức get localhost:8888/checkprovince?id=?
 router.get('/checkprovince', async (req, res) => {

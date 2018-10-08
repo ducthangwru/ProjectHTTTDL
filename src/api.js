@@ -63,3 +63,27 @@ function checkProvince(id, callback) {
         callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
+
+function login(username, password, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/login",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username,
+          "password": password
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+
+}

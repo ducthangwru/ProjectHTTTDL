@@ -23,4 +23,12 @@ function checkProvince(id, callback) {
 }
 
 
-module.exports = {checkPoint, checkAll, checkProvince}
+function login(username, password, callback) {4
+	console.log(username, password)
+	db.query(`select * from users where username like '${username}' and password like '${password}'`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+
+module.exports = {checkPoint, checkAll, checkProvince, login}

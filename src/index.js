@@ -4,6 +4,18 @@ var OSM;
 var listMaker = []
 
 $(document).ready(function () {
+    $("#btnLogin").click(function() {
+        login($("#ipUsername").val(), $("#ipPassword").val(), (err, data) => {
+            if(err)
+                console.log(err)
+            else if(typeof data.data == 'undefined')
+            {
+                console.log("Thatbai")
+            }
+            else
+                console.log("thanh cong")
+        })
+    })
     //Tao va add Map from JSON
     mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5,zoomControl: false});
     L.control.pan().addTo(mymap);
