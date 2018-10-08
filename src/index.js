@@ -5,13 +5,15 @@ var listMaker = []
 
 $(document).ready(function () {
     //Tao va add Map from JSON
-    mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5});
+    mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5,zoomControl: false});
+    L.control.pan().addTo(mymap);
+    L.control.zoom().addTo(mymap);
     getGeoJSON((data) => {
         lyrOSM = L.geoJson(data);
         OSM = L.tileLayer.provider('Stamen.Watercolor');
         // mymap.addLayer(OSM);
         // mymap.addLayer(lyrOSM); 
-        L.layerGroup([OSM, lyrOSM]).addTo(mymap);
+        L.layerGroup([lyrOSM]).addTo(mymap);
     })
 
     resetAll();
