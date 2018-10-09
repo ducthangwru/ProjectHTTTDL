@@ -60,10 +60,12 @@ function checkProvince(id, check) {
     
         $.ajax(settings).done((result) => {
             if(check) {
-                if((result.data.vote1 / (result.data.vote1 + result.data.vote2)) > 0.5)
+                if((result.data.vote1 / (result.data.vote1 + result.data.vote2)) < 0.5)
                     resolve({color: "#ff0000"})
-                else
+                else if ((result.data.vote1 / (result.data.vote1 + result.data.vote2)) > 0.5)
                     resolve({color: "#00ff00"})
+                else 
+                    resolve({color: "#0000ff"})
             } else {
                 resolve(result)
             }
