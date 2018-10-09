@@ -23,11 +23,14 @@ $(document).ready(function () {
         }
 
         if ($("#sel1 option:selected").length == 1 && $("#ipUsername").val() != "" && $("#ipPassword").val() != ""){
-            // console.log("ahihih");
+            console.log($("#sel1 option:selected").attr("id"), $("#ipUsername").val() ,$("#ipPassword").val());
             signup($("#ipUsername").val(), $("#ipPassword").val(), $("#sel1 option:selected").attr("id"), (data) => {
                 console.log(data);
             });
         }
+
+        else
+            return false;
             // alert("Mời điền đầy đủ thông tin trước khi đăng nhập hay đăng ký!");    
     });
     $("#btnLogin").click(function() {
