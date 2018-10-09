@@ -44,8 +44,17 @@ $(document).ready(function () {
                 mymap = L.map('map123',{center:[16.0472484, 108.1716864],zoom:5,zoomControl: false});
                 L.control.pan().addTo(mymap);
                 L.control.zoom().addTo(mymap);
-                getGeoJSON((data) => {
-                    lyrOSM = L.geoJson(data);
+                getGeoJSON(async (data) => {
+                    for(let i = 0; i < data.features.length; i++) {
+                        let color = await checkProvince(data.features[i].properties.OBJECTID, true);
+                        data.features[i].color = color;
+                    }
+                    lyrOSM = L.geoJson(data, {
+                        style: function(feature) {
+                            return feature.color;
+                        }
+                    });
+
                     OSM = L.tileLayer.provider('Stamen.Watercolor');
                     // mymap.addLayer(OSM);
                     // mymap.addLayer(lyrOSM); 
