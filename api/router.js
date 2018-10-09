@@ -57,6 +57,21 @@ router.post('/login', async(req, res) => {
     })
 })
 
+// lấy dữ liệu các tỉnh thành 
+router.get('/getProvinces', async(req, res) => {
+    query.getProvinces((err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data
+            })
+        }
+    })
+})
+
 
 //Tạo api nếu gửi lên phương thức get localhost:8888/checkprovince?id=?
 router.get('/checkprovince', async (req, res) => {
@@ -75,5 +90,24 @@ router.get('/checkprovince', async (req, res) => {
     })
 })
 
+// Đăng ký
+router.post('/signup', async(req, res) => {
+    console.log(req.body)
+    let username = req.body.username
+    let password = req.body.password
+    let province = req.body.province
+
+    query.signup(username , password , province, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data
+            })
+        }
+    })
+})
 
 module.exports = router;

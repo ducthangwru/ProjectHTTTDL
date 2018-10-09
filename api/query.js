@@ -23,12 +23,22 @@ function checkProvince(id, callback) {
 }
 
 
-function login(username, password, callback) {4
-	console.log(username, password)
+function login(username, password, callback) {	
 	db.query(`select * from users where username like '${username}' and password like '${password}'`, (err, res) => {
 		callback(err, res)
 	})
 }
 
+function getProvinces(callback) {	
+	db.query(`select vietnam_provinces.ten from vietnam_provinces order by vietnam_provinces.ten asc`, (err, res) => {
+		callback(err, res)
+	})
+}
 
-module.exports = {checkPoint, checkAll, checkProvince, login}
+function signup(callback) {	
+	db.query(`insert into users values('${username}','${password}','${province}')`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+module.exports = {checkPoint, checkAll, checkProvince, login, getProvinces, signup}

@@ -13,7 +13,7 @@
     <script src="js/leaflet-providers.js"></script>
     <script src="js/numeral.js"></script>
     <script src="js/L.Control.Pan.js"></script>
-    <title>Bài tập lớn HTTTDL</title>
+    <title>Gương mặt khả ái</title>
     <style>
         #map123 {
             height: 100vh;
@@ -27,25 +27,31 @@
 </head>
 
 <body>
-    <div id="divLogin" class="row" style="display: block; margin-top: 20%">
-        <div class="col-md-3"></div>
-        <div class="col-md-6" style="text-align: center;">
+    <div id="divLogin" class="row" style="display: block;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="text-align: center;">
             <div class="row">
-                <label for="#ipUsername" style="margin-bottom: 1%"> Tài khoản: </label> <br>
-                <input type="text" class="form-control" id="ipUsername" style="margin-bottom: 1%"> <br>
-                <label for="#ipPassword" style="margin-bottom: 1%"> Mật khẩu: </label> <br>
-                <input type="text" id="ipPassword" class="form-control" style="margin-bottom: 1%"> <br>
-                <button class="btn btn-primary" id="btnLogin"> Đăng nhập</button>
+                <img src="https://image.flaticon.com/icons/svg/190/190600.svg" style="width: 50%; height: 50%; display: block; margin: 10% auto">
+                <label for="ipUsername" style="margin-bottom: 1%"> Tài khoản: </label> <br>
+                <input type="text" class="form-control" id="ipUsername" style="margin-bottom: 1%; text-align: center"> <br>
+                <label for="ipPassword" style="margin-bottom: 1%"> Mật khẩu: </label> <br>
+                <input type="text" id="ipPassword" class="form-control" style="margin-bottom: 1%; text-align: center"> <br>
+                 <div class="form-group" style="margin-bottom: 7%; display: none">
+                  <label for="sel1">Chọn tỉnh / thành phố</label>
+                  <select class="form-control" id="sel1" style=" text-align: center"></select>
+                </div>
+                <button class="btn btn-primary" id="btnLogin" style="margin-right: 5%"> Đăng nhập </button>
+                <button class="btn btn-primary" id="btnSignup"> Đăng ký </button>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-4"></div>
     </div>
 
     <div id="divIndex" class="row" style="padding: 2%; display: none;">
         <div id="idLogin" style="display: none;"></div>
         <div class="col-md-3">
             <div class="row" style="text-align: center; margin-bottom: 5%">
-                <h3>Tình hình bầu cử tại Việt Nam</h3>
+                <h3>Gương mặt khả ái</h3>
                 <h4 id="province">Toàn quốc</h4>
             </div>
 

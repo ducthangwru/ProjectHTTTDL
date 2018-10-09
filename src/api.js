@@ -85,5 +85,43 @@ function login(username, password, callback) {
     }).fail((err) => {
         callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
-
 }
+
+function getProvinces(callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/getProvinces",
+        "method": "GET"
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function signup(username , password , province, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/signup",
+        "method": "POST",
+        "data": {
+          "username": username,
+          "password": password,
+          "province": province
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+
