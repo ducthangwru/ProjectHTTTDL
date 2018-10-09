@@ -30,7 +30,7 @@ function login(username, password, callback) {
 }
 
 function getProvinces(callback) {	
-	db.query(`select vietnam_provinces.ten from vietnam_provinces order by vietnam_provinces.ten asc`, (err, res) => {
+	db.query(`select vietnam_provinces.ten, vietnam_provinces.gid from vietnam_provinces order by vietnam_provinces.name asc`, (err, res) => {
 		callback(err, res)
 	})
 }

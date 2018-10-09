@@ -14,9 +14,9 @@ $(document).ready(function () {
             getProvinces((data) => {
                 console.log(data);
                 $.map(data.data.rows, function(v,i){
-                    // console.log(v.ten,i);
+                    // console.log(v);
                     $("#sel1").append(
-                        $("<option>" , {text: v.ten.slice(v.ten.indexOf("Tỉnh") == 0 ? 4 : 9 ), id: v.ten })
+                        $("<option>" , {text: v.ten.slice(v.ten.indexOf("Tỉnh") == 0 ? 4 : 9 ), id: v.gid })
                     )
                 })
             })
@@ -46,7 +46,7 @@ $(document).ready(function () {
                 L.control.zoom().addTo(mymap);
                 getGeoJSON((data) => {
                     lyrOSM = L.geoJson(data);
-                    OSM = L.tileLayer.provider('Stamen.Watercolor');
+                    OSM = L.tileLayer.provider('Esri.WorldImagery');
                     // mymap.addLayer(OSM);
                     // mymap.addLayer(lyrOSM); 
                     L.layerGroup([OSM, lyrOSM]).addTo(mymap);
