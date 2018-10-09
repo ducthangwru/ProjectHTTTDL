@@ -49,19 +49,30 @@ function checkAll(callback) {
 }
 
 //Hàm lấy thông tin địa lý theo id tỉnh
-function checkProvince(id, callback) {
-    let settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": `/checkprovince?id=${id}`,
-        "method": "GET"
-    }
-
-    $.ajax(settings).done((result) => {
-        callback(result)
-    }).fail((err) => {
-        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
-    });
+function checkProvince(id, check) {
+    return new Promise((resolve, reject) => {
+        let settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": `/checkprovince?id=${id}`,
+            "method": "GET"
+        }
+    
+        $.ajax(settings).done((result) => {
+            if(check) {
+                if((result.data.vote1 / (result.data.vote1 + result.data.vote2)) < 0.5)
+                    resolve({color: "#ff0000"})
+                else if ((result.data.vote1 / (result.data.vote1 + result.data.vote2)) > 0.5)
+                    resolve({color: "#00ff00"})
+                else 
+                    resolve({color: "#0000ff"})
+            } else {
+                resolve(result)
+            }
+        }).fail((err) => {
+            reject({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+        });
+    })
 }
 
 function login(username, password, callback) {
