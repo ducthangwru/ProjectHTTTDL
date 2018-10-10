@@ -66,7 +66,7 @@ router.get('/getProvinces', async(req, res) => {
         {
             res.json({
                 success: true,
-                data: data
+                data: data.rows
             })
         }
     })
@@ -92,12 +92,13 @@ router.get('/checkprovince', async (req, res) => {
 
 // Đăng ký
 router.post('/signup', async(req, res) => {
-    console.log(req.body)
     let username = req.body.username
     let password = req.body.password
     let province = req.body.province
+    let gender = req.body.gender
+    let birthday = req.body.birthday
 
-    query.signup(username , password , province, (err, data) => {
+    query.signup(username , password , province, gender, birthday, (err, data) => {
         if(err)
             res.json({success: false, error : err})
         else
@@ -105,6 +106,40 @@ router.post('/signup', async(req, res) => {
             res.json({
                 success: true,
                 data: data
+            })
+        }
+    })
+})
+
+// Vote
+router.post('/vote', async(req, res) => {
+    let username = req.body.username
+    let vote = req.body.vote
+
+    query.vote(username, vote, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true
+            })
+        }
+    })
+})
+
+// updateVote
+router.post('/updateVote', async(req, res) => {
+    let username = req.body.username
+    let vote = req.body.vote
+
+    query.updateVote(username, vote, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true
             })
         }
     })

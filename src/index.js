@@ -4,32 +4,58 @@ var OSM;
 var listMaker = []
 
 $(document).ready(function () {
+    $('#slBirthdaySignUp').html('')
+    for (let i = 1930; i <= 2005; i++) {
+        $('#slBirthdaySignUp').append(`
+            <option value="${i}">${i}</option>
+        `)
+    }
+
+    $('#slCitySignUp').html('')
+    getProvinces((data) => {
+        if(data.success)
+        {
+            for (let i = 0; i < data.data.length; i++) {
+                $('#slCitySignUp').append(`
+                    <option value="${data.data[i].gid}">${data.data[i].ten}</option>
+                `)
+            }
+        }
+    })
+
     $("#ipPassword , #ipUsername").on("keypress", function(e){
         if (e.which == 13)
             $("#btnLogin").click();
     })
-    $("#btnSignup").click(function(){
-        if (!$("#sel1 option:selected").length){
-            $(".form-group").fadeIn(500);
-            getProvinces((data) => {
-                console.log(data);
-                $.map(data.data.rows, function(v,i){
-                    // console.log(v);
-                    $("#sel1").append(
-                        $("<option>" , {text: v.ten.slice(v.ten.indexOf("Tỉnh") == 0 ? 4 : 9 ), id: v.gid })
-                    )
-                })
-            })
-        }
 
-        if ($("#sel1 option:selected").length == 1 && $("#ipUsername").val() != "" && $("#ipPassword").val() != ""){
-            // console.log("ahihih");
-            signup($("#ipUsername").val(), $("#ipPassword").val(), $("#sel1 option:selected").attr("id"), (data) => {
-                console.log(data);
-            });
-        }
-            // alert("Mời điền đầy đủ thông tin trước khi đăng nhập hay đăng ký!");    
+    $("#btnSignup").click(function(){
+       $('#modalSignup').modal('show')
     });
+
+    $("#btnSignUpForm").click(function() {
+        let username = $('#ipUsernameSignUp').val()
+        let password = $('#ipPasswordSignUp').val()
+        let province = $('#slCitySignUp').val()
+        let gender = $('#slGenderSignUp').val()
+        let birthday = $('#slBirthdaySignUp').val()
+
+        if(!username)
+            alert('Tài khoản không được để trống!')
+        else if(!password)
+            alert('Mật khẩu không được để trống!')
+        else
+        {
+            signup(username, password, province, gender, birthday, (data) => {
+                if(data.success)
+                    alert('Đăng ký thành công!')
+                else
+                    alert('Đăng ký thất bại!')
+            })
+
+            $('#modalSignup').modal('hide')
+        }
+    })
+
     $("#btnLogin").click(function() {
         login($("#ipUsername").val(), $("#ipPassword").val(), (data) => {
            if(typeof data.data == 'undefined')

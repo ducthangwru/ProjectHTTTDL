@@ -114,16 +114,21 @@ function getProvinces(callback) {
     });
 }
 
-function signup(username , password , province, callback) {
+function signup(username , password , province, gender, birthday, callback) {
     let settings = {
         "async": true,
         "crossDomain": true,
         "url": "/signup",
         "method": "POST",
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
         "data": {
           "username": username,
           "password": password,
-          "province": province
+          "province": province,
+          "gender" : gender,
+          "birthday" : birthday
         }
     }
 
@@ -134,5 +139,53 @@ function signup(username , password , province, callback) {
         callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
+
+function vote(username , vote, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/vote",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username,
+          "vote" : vote
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+
+function updateVote(username , vote, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/updateVote",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username,
+          "vote" : vote
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
 
 

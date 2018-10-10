@@ -35,10 +35,33 @@ function getProvinces(callback) {
 	})
 }
 
-function signup(callback) {	
-	db.query(`insert into users values('${username}','${password}','${province}')`, (err, res) => {
+function signup(username, password, province, gender, birthday, callback) {	
+	db.query(`insert into users values('${username}','${password}',${province}, ${gender}, ${birthday})`, (err, res) => {
 		callback(err, res)
 	})
 }
 
-module.exports = {checkPoint, checkAll, checkProvince, login, getProvinces, signup}
+
+function vote(username, vote, callback) {	
+	db.query(`insert into votes values('${username}',${vote})`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function updateVote(username, vote, callback) {	
+	db.query(`update votes set vote = ${vote} where username like '${username}'`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+
+module.exports = {
+    checkPoint, 
+    checkAll, 
+    checkProvince, 
+    login, 
+    getProvinces, 
+    signup, 
+    vote,
+    updateVote
+}
