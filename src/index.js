@@ -104,11 +104,12 @@ $(document).ready(function () {
     getProvinces((data) => {
         if(data.success)
         {
-            for (let i = 0; i < data.data.length; i++) {
-                $('#slCitySignUp').append(`
-                    <option value="${data.data[i].gid}">${data.data[i].ten}</option>
-                `)
-            }
+            // console.log(data.data)
+            $.map(data.data,function(v,i){
+                $("#slCitySignUp").append(
+                    $("<option>" , {value: data.data[i].gid, text: data.data[i].ten.slice(data.data[i].ten.indexOf("Tỉnh") == 0 ? 4 : 9)})
+                )
+            })
         }
     })
 
