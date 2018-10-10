@@ -100,7 +100,9 @@ router.post('/signup', async(req, res) => {
 
     query.signup(username , password , province, gender, birthday, (err, data) => {
         if(err)
+        {
             res.json({success: false, error : err})
+        }
         else
         {
             res.json({
@@ -128,18 +130,31 @@ router.post('/vote', async(req, res) => {
     })
 })
 
-// updateVote
-router.post('/updateVote', async(req, res) => {
-    let username = req.body.username
-    let vote = req.body.vote
+router.get('/chartGenderProvince', async (req, res) => {
+    let id = req.query.id
 
-    query.updateVote(username, vote, (err, data) => {
+    query.chartGenderProvince(id, (err, data) => {
         if(err)
             res.json({success: false, error : err})
         else
         {
             res.json({
-                success: true
+                success: true,
+                data: data.rows[0]
+            })
+        }
+    })
+})
+
+router.get('/chartGenderAll', async (req, res) => {
+    query.chartGenderAll((err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows[0]
             })
         }
     })

@@ -61,9 +61,9 @@ function checkProvince(id, check) {
         $.ajax(settings).done((result) => {
             if(check) {
                 if((result.data.vote1 / (result.data.vote1 + result.data.vote2)) < 0.5)
-                    resolve({color: "#ff0000"})
+                    resolve({color: "#d9534f"})
                 else if ((result.data.vote1 / (result.data.vote1 + result.data.vote2)) > 0.5)
-                    resolve({color: "#00ff00"})
+                    resolve({color: "#5cb85c"})
                 else 
                     resolve({color: "#0000ff"})
             } else {
@@ -164,28 +164,32 @@ function vote(username , vote, callback) {
 }
 
 
-function updateVote(username , vote, callback) {
+function chartGenderProvince(id, callback) {
     let settings = {
         "async": true,
         "crossDomain": true,
-        "url": "/updateVote",
-        "method": "POST",
-        "headers": {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "data": {
-          "username": username,
-          "vote" : vote
-        }
+        "url": `/chartGenderProvince?id=${id}`,
+        "method": "GET"
     }
 
-    $.ajax(settings)
-    .done((result) => {
+    $.ajax(settings).done((result) => {
         callback(result)
     }).fail((err) => {
-        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
 
+function chartGenderAll(callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `/chartGenderAll`,
+        "method": "GET"
+    }
 
-
+    $.ajax(settings).done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}

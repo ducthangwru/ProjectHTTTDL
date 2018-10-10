@@ -2,8 +2,97 @@ var mymap;
 var lyrOSM;
 var OSM;
 var listMaker = []
+var gid = 0
+var dataChartGenderVote1 = []
+var dataChartGenderVote2 = []
 
 $(document).ready(function () {
+    // Radialize the colors
+    Highcharts.setOptions({
+        colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+            return {
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        })
+    });
+
+    // Build the chart
+    var chart1 = new Highcharts.chart({
+        chart: {
+            renderTo: 'chartGengerVote1',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Biểu đồ thống kê giới tính'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Tỷ lệ',
+            data: dataChartGenderVote1
+        }]
+    });
+
+    var chart2 = new Highcharts.chart('chartGengerVote2', {
+        chart: {
+            renderTo: 'chartGengerVote2',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Biểu đồ thống kê giới tính'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Tỷ lệ',
+            data: dataChartGenderVote2
+        }]
+    });
+   
     $('#slBirthdaySignUp').html('')
     for (let i = 1930; i <= 2005; i++) {
         $('#slBirthdaySignUp').append(`
@@ -64,6 +153,21 @@ $(document).ready(function () {
             }
             else
             {
+                localStorage.setItem('user', JSON.stringify(data.data))
+                if(data.data.vote == 1)
+                {
+                    $('#imgCuong').css('filter','brightness(20%)')
+                    $('#imgThang').css('filter','brightness(100%)')
+                }
+                else 
+                {
+                    $('#imgThang').css('filter','brightness(20%)')
+                    $('#imgCuong').css('filter','brightness(100%)')
+                }
+
+                $('#h5Username').text("Tài khoản: " + data.data.username)
+                $('#h5Province').text("Tỉnh/Thành phố: " + data.data.ten)
+
                 $('#divLogin').fadeOut(500);
                 $('#divIndex').fadeIn(800);
 
@@ -82,8 +186,6 @@ $(document).ready(function () {
                     });
 
                     OSM = L.tileLayer.provider('Stamen.Watercolor');
-                    // mymap.addLayer(OSM);
-                    // mymap.addLayer(lyrOSM); 
                     L.layerGroup([OSM, lyrOSM]).addTo(mymap);
                 })
 
@@ -98,6 +200,7 @@ $(document).ready(function () {
                     checkPoint(e.latlng.lat, e.latlng.lng, (data) => {
                         if(data.data)
                         {
+                            gid = data.data.gid
                             let index = containsObject(data.data.gid, listMaker)
                             let vote = data.data.vote1 + data.data.vote2
                             let percentVote1 = (data.data.vote1 / vote) * 100
@@ -174,6 +277,44 @@ $(document).ready(function () {
         })
     })
 
+    $("#btnThongKe").click(function() {
+        dataChartGenderVote1 = []
+        dataChartGenderVote2 = []
+        if(gid == 0)
+        {
+            chartGenderAll((data) => {
+                if(data.success)
+                {
+                    dataChartGenderVote1.push({ name: 'Nam', y: (parseInt(data.data.namvote1) / (parseInt(data.data.namvote1) + parseInt(data.data.nuvote1)) * 100)})
+                    dataChartGenderVote1.push({ name: 'Nữ', y: (parseInt(data.data.nuvote1) / (parseInt(data.data.namvote1) + parseInt(data.data.nuvote1)) * 100)})
+                    dataChartGenderVote2.push({ name: 'Nam', y: (parseInt(data.data.namvote2) / (parseInt(data.data.namvote2) + parseInt(data.data.nuvote2)) * 100)})
+                    dataChartGenderVote2.push({ name: 'Nữ', y: (parseInt(data.data.nuvote2) / (parseInt(data.data.namvote2) + parseInt(data.data.nuvote2)) * 100)})
+
+                    console.log(dataChartGenderVote2)
+                    chart1.series[0].setData(dataChartGenderVote1);
+                    chart2.series[0].setData(dataChartGenderVote2);
+                }
+            })
+        }
+        else
+        {
+            chartGenderProvince(gid, (data) => {
+                if(data.success)
+                {
+                    dataChartGenderVote1.push({ name: 'Nam', y: (parseInt(data.data.namvote1) / (parseInt(data.data.namvote1) + parseInt(data.data.nuvote1)) * 100)})
+                    dataChartGenderVote1.push({ name: 'Nữ', y: (parseInt(data.data.nuvote1) / (parseInt(data.data.namvote1) + parseInt(data.data.nuvote1)) * 100)})
+                    dataChartGenderVote2.push({ name: 'Nam', y: (parseInt(data.data.namvote2) / (parseInt(data.data.namvote2) + parseInt(data.data.nuvote2)) * 100)})
+                    dataChartGenderVote2.push({ name: 'Nữ', y: (parseInt(data.data.nuvote2) / (parseInt(data.data.namvote2) + parseInt(data.data.nuvote2)) * 100)})
+
+                    chart1.series[0].setData(dataChartGenderVote1);
+                    chart2.series[0].setData(dataChartGenderVote2);
+                }
+            })
+        }
+
+        $('#modalChart').modal('show')
+    })
+
     function containsObject(gid, list) {
         var i;
         for (i = 0; i < list.length; i++) {
@@ -186,6 +327,8 @@ $(document).ready(function () {
     }
 
     function resetAll() {
+        gid = 0
+
         checkAll((data) => {
             if(data.success)
             {
@@ -206,3 +349,27 @@ $(document).ready(function () {
         })
     }
 });
+
+function voteFunc(votef) {
+    let user = JSON.parse(localStorage.getItem('user'))
+    vote(user.username, votef, (res) => {
+        console.log(res)
+        if(res.success)
+        {
+            if(votef == 1)
+            {
+                $('#imgCuong').css('filter','brightness(20%)')
+                $('#imgThang').css('filter','brightness(100%)')
+                alert("Vote cho Thắng thành công!")
+            }
+            else 
+            {
+                $('#imgThang').css('filter','brightness(20%)')
+                $('#imgCuong').css('filter','brightness(100%)')
+                alert("Vote cho Cường thành công!")
+            }
+        }
+        else
+            console.log(res.error)
+    })
+}

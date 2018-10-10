@@ -14,6 +14,7 @@
     <script src="js/leaflet-providers.js"></script>
     <script src="js/numeral.js"></script>
     <script src="js/L.Control.Pan.js"></script>
+    <script src="js/highcharts.src.js"></script>
     <title>Gương mặt khả ái</title>
     <style>
         #map123 {
@@ -90,8 +91,31 @@
 
             <div class="row" style="padding: 5%; text-align: center">
                 <button id="btnToanQuoc" class="btn btn-primary">Toàn quốc</button>
+                <button id="btnThongKe" class="btn btn-primary">Xem thống kê</button>
             </div>
             
+            <hr>
+            <div class="row" style="text-align: center; margin-bottom: 5%">
+                    <h4>Thông tin vote của bạn</h4>
+                    <h5 id="h5Username">Tài khoản: </h5>
+                    <h5 id="h5Province">Tỉnh/Thành phố: </h5>
+                    <br>
+                    <br>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-md-6">
+                            <img onclick="voteFunc(1)" style="" id="imgThang" src="images/vote1.jpg" width="100px" height="100px" alt="">
+                            <label>Mr. Nguyễn Đức Thắng</label> <br>
+                            <label class='label label-success' style="display: inline-block; width:50px; height:25px"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <img onclick="voteFunc(2)" style="" id="imgCuong" src="images/vote1.jpg" width="100px" height="100px" alt="">
+                            <label>Mr. Đinh Việt Cường</label> <br>
+                            <label class='label label-danger' style="display: inline-block; width:50px; height:25px"></label>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+            </div>
         </div>
         <div class="col-md-9">
             <div id="map123"></div>
@@ -130,6 +154,41 @@
       
         </div>
       </div>
+
+    <div id="modalChart" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Biểu đồ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6" style="text-align: center">
+                        <h5>Mr. Nguyễn Đức Thắng</h5>
+                        <br>
+                        <div id="chartGengerVote1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <br>
+
+                    </div>
+
+                    <div class="col-md-6" style="text-align: center">
+                        <h5>Mr. Đinh Việt Cường</h5>
+                        <br>
+                        <div id="chartGengerVote2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+    </div>
 
     <script src="api.js"></script>
     <script src="index.js"></script>
