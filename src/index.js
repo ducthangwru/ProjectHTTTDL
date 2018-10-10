@@ -225,7 +225,7 @@ $(document).ready(function () {
                                         <label>Mr. Nguyễn Đức Thắng</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <img src="images/vote1.jpg" width="50px" height="50px" alt="">
+                                        <img src="images/vote2.png" width="50px" height="50px" alt="">
                                         <label>Mr. Đinh Việt Cường</label>
                                     </div>
                                 </div>
