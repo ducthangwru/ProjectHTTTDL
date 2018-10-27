@@ -3,7 +3,6 @@ var dataSourceUser = []
 
 $(document).ready(function () {
     let isLogged = localStorage.getItem('loginAdmin')
-    console.log(isLogged)
     if(isLogged == true)
     {
         $('#divLogin').fadeOut(500);
