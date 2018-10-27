@@ -193,3 +193,126 @@ function chartGenderAll(callback) {
         callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
     });
 }
+
+function loginAdmin(username, password, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/loginAdmin",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username,
+          "password": password
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function getAllProvince(callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `/getAllProvince`,
+        "method": "GET"
+    }
+
+    $.ajax(settings).done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function getAllUserByIdProvice(id, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `/getAllUserByIdProvice?id=${id}`,
+        "method": "GET"
+    }
+
+    $.ajax(settings).done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({ success: false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function updateUserX(username, birthday, gender, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/updateUser",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username,
+          "birthday": birthday,
+          "gender" : gender
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function updateProvinceX(id, ten, danso, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/updateProvince",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "id": id,
+          "ten": ten,
+          "danso" : danso
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}
+
+function deleteUserX(username, callback) {
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/deleteUser",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+          "username": username
+        }
+    }
+
+    $.ajax(settings)
+    .done((result) => {
+        callback(result)
+    }).fail((err) => {
+        callback({success : false, error: "Lỗi kết nối Internet.Vui lòng thử lại" });
+    });
+}

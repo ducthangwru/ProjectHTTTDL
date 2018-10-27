@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="leaflet.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/L.Control.Pan.css">
+    <link rel="stylesheet" href="css/dataTable.min.css">
+    <script src="leaflet.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/leaflet-providers.js"></script>
+    <script src="js/numeral.js"></script>
+    <script src="js/L.Control.Pan.js"></script>
+    <script src="js/highcharts.src.js"></script>
+    <script src="js/datatable.min.js"></script>
+    <title>Admin</title>
+
+</head>
+
+<body>
+    <div id="divLogin" class="row" style="display: block;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="text-align: center;">
+            <div class="row">
+                <img src="images/logo.svg" style="width: 50%; height: 50%; display: block; margin: 10% auto">
+                <label for="ipUsername" style="margin-bottom: 1%"> Tài khoản: </label> <br>
+                <input type="text" class="form-control" id="ipUsername" style="margin-bottom: 1%; text-align: center"> <br>
+                <label for="ipPassword" style="margin-bottom: 1%"> Mật khẩu: </label> <br>
+                <input type="password" id="ipPassword" class="form-control" style="margin-bottom: 1%; text-align: center"> <br>
+                <button class="btn btn-primary" id="btnLogin" style="margin-right: 5%"> Đăng nhập </button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <div id="divIndex" class="row" style="padding: 2%; display: none;">
+        <h3>DANH SÁCH TỈNH/THÀNH PHỐ CỦA VIỆT NAM</h3>
+        <button class="btn btn-danger" id="btnDangXuat">Đăng xuất</button>
+        <div id="tableListProvince_wrapper" class="dataTables_wrapper no-footer">
+            <table id="tableListProvince" class="table table-striped table-vcenter table-bordered width-100 table-custom1 table-dashboard dataTable no-footer"
+                style="width: 96%" role="grid">
+                <thead>
+                    <tr id="header" role="row">
+                        <th></th>
+                        <th>Tên</th>
+                        <th>Dân số</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div id="divUsers" class="row" style="padding: 2%; display: none;">
+        <h3 id="h3divUser"></h3>
+        <div hidden id="idTinhUser"></div>
+        <div hidden id="tenTinh"></div>
+        <div id="tableListUser_wrapper" class="dataTables_wrapper no-footer">
+            <table id="tableListUser" class="table table-striped table-vcenter table-bordered width-100 table-custom1 table-dashboard dataTable no-footer"
+                style="width: 96%" role="grid">
+                <thead>
+                    <tr id="header" role="row">
+                        <th>Tài khoản</th>
+                        <th>Giới tính</th>
+                        <th>Năm sinh</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalUpdateProvince" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Cập nhật</h4>
+            </div>
+            <div class="modal-body">
+                <div hidden id="idTinh"></div>
+                <label for="#ipTenTinh" style="margin-bottom: 1%"> Tên: </label> <br>
+                <input type="text" class="form-control" id="ipTenTinh" style="margin-bottom: 1%; text-align: center"> <br>
+                <label for="#ipDanSo" style="margin-bottom: 1%"> Dân số: </label> <br>
+                <input type="number" id="ipDanSo" class="form-control" style="margin-bottom: 1%; text-align: center"> <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnUpdateProvince">Cập nhật</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+
+      <div id="modalUpdateUser" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhật</h4>
+            </div>
+            <div class="modal-body">
+                <label for="#ipUsernamex" style="margin-bottom: 1%"> Tài khoản: </label> <br>
+                <input type="text" class="form-control" id="ipUsernamex" style="margin-bottom: 1%; text-align: center"> <br>
+                <label for="#slGenderx" style="margin-bottom: 1%"> Giới tính: </label> <br>
+                <select class="form-control" id="slGenderx" style=" text-align: center">
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                </select>
+                <label for="#slBirthdayx" style="margin-bottom: 1%"> Năm sinh: </label> <br>
+                <select class="form-control" id="slBirthdayx" style=" text-align: center"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnUpdateUser">Cập nhật</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+            </div>
+        
+        </div>
+    </div>
+    
+
+    <script src="api.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

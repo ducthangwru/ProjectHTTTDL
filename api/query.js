@@ -134,6 +134,43 @@ function chartGenderAll(callback) {
     })
 }
 
+function loginAdmin(username, password, callback) {
+    db.query(`select * from admin where username like '${username}' and password like '${password}'`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function getAllProvince(callback) {
+    db.query(`select gid, ten, danso from vietnam_provinces`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function getAllUserByIdProvice(id, callback) {
+    db.query(`select * from users where city = ${id}`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function updateProvince(id, ten, danso, callback) {
+    console.log(`update vietnam_provinces set ten = '${ten}', danso = ${danso} where gid = ${id}`)
+    db.query(`update vietnam_provinces set ten = '${ten}', danso = ${danso} where gid = ${id}`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function updateUser(username, birthday, gender, callback) {
+    db.query(`update users set birthday = ${birthday}, gender = ${gender} where username like '${username}'`, (err, res) => {
+		callback(err, res)
+	})
+}
+
+function deleteUser(username, callback) {
+    db.query(`delete from users where username like '${username}'; delete from votes where username like '${username}'`, (err, res) => {
+		callback(err, res)
+	})
+}
+
 module.exports = {
     checkPoint, 
     checkAll, 
@@ -143,5 +180,11 @@ module.exports = {
     signup, 
     vote,
     chartGenderProvince,
-    chartGenderAll
+    chartGenderAll,
+    loginAdmin,
+    getAllProvince,
+    getAllUserByIdProvice,
+    updateProvince,
+    updateUser,
+    deleteUser
 }

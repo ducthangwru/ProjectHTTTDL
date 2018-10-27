@@ -57,6 +57,23 @@ router.post('/login', async(req, res) => {
     })
 })
 
+router.post('/loginAdmin', async(req, res) => {
+    let username = req.body.username
+    let password = req.body.password
+
+    query.loginAdmin(username, password, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows[0]
+            })
+        }
+    })
+})
+
 // lấy dữ liệu các tỉnh thành 
 router.get('/getProvinces', async(req, res) => {
     query.getProvinces((err, data) => {
@@ -155,6 +172,83 @@ router.get('/chartGenderAll', async (req, res) => {
             res.json({
                 success: true,
                 data: data.rows[0]
+            })
+        }
+    })
+})
+
+router.get('/getAllProvince', async (req, res) => {
+    query.getAllProvince((err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows
+            })
+        }
+    })
+})
+
+router.get('/getAllUserByIdProvice', async (req, res) => {
+    query.getAllUserByIdProvice(req.query.id, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true,
+                data: data.rows
+            })
+        }
+    })
+})
+
+router.post('/updateUser', async(req, res) => {
+    let username = req.body.username
+    let birthday = req.body.birthday
+    let gender = req.body.gender
+
+    query.updateUser(username, birthday, gender, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true
+            })
+        }
+    })
+})
+
+router.post('/updateProvince', async(req, res) => {
+    let id = req.body.id
+    let ten = req.body.ten
+    let danso = req.body.danso
+
+    query.updateProvince(id, ten, danso, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true
+            })
+        }
+    })
+})
+
+router.post('/deleteUser', async(req, res) => {
+    let username = req.body.username
+
+    query.deleteUser(username, (err, data) => {
+        if(err)
+            res.json({success: false, error : err})
+        else
+        {
+            res.json({
+                success: true
             })
         }
     })
