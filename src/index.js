@@ -199,7 +199,7 @@ $(document).ready(function () {
                 //Xu ly su kien Click tren Map
                 mymap.on('click',function(e){
                     checkPoint(e.latlng.lat, e.latlng.lng, (data) => {
-                        if(data.data)
+                        if(data.data && data.data.gid != 0)
                         {
                             gid = data.data.gid
                             let index = containsObject(data.data.gid, listMaker)

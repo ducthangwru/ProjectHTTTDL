@@ -7,18 +7,24 @@ function checkPoint(lat, lng, callback) {
         if(err)
         callback(err, res)
         else
-        {
-            countVote(res.rows[0].gid, (error, result) => {
-                if(error)
-                    callback(error, res)
-                else
-                {
-                    res.rows[0].vote1 = parseInt(res.rows[0].vote1) + parseInt(result.rows[0].vote1)
-                    res.rows[0].vote2 = parseInt(res.rows[0].vote2) + parseInt(result.rows[0].vote2)
-                    console.log(res.rows)
-                    callback(error, res)
-                }
-            })
+        {   
+            if(res.rows.length > 0) 
+            {
+                 countVote(res.rows[0].gid, (error, result) => {
+                    if(error)
+                        callback(error, res)
+                    else
+                    {
+                        res.rows[0].vote1 = parseInt(res.rows[0].vote1) + parseInt(result.rows[0].vote1)
+                        res.rows[0].vote2 = parseInt(res.rows[0].vote2) + parseInt(result.rows[0].vote2)
+                        console.log(res.rows)
+                        callback(error, res)
+                    }
+                })
+            }
+            else{
+                callback(err, {rows : [{gid :0}]})
+            }   
         }
     })
 }
