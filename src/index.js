@@ -5,8 +5,11 @@ var listMaker = []
 var gid = 0
 var dataChartGenderVote1 = []
 var dataChartGenderVote2 = []
+var user1
 
 $(document).ready(function () {
+    // $("#left").css({"max-height": $("#map123").height()})
+    // console.log($("#map123").height())
     // Radialize the colors
     Highcharts.setOptions({
         colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -14,7 +17,7 @@ $(document).ready(function () {
                 radialGradient: {
                     cx: 0.5,
                     cy: 0.3,
-                    r: 0.7
+                    r: 0.5
                 },
                 stops: [
                     [0, color],
@@ -164,6 +167,7 @@ $(document).ready(function () {
         $('#divIndex').fadeOut(500);
         $("#btnLogin").click(function() {
             login($("#ipUsername").val(), $("#ipPassword").val(), (data) => {
+                console.log(data.data)
                if(typeof data.data == 'undefined')
                 {
                     alert("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin")
@@ -171,17 +175,22 @@ $(document).ready(function () {
                 else
                 {
                     localStorage.setItem('login', true)
+                    user1 = data.data.username
                     if(data.data.vote == 1)
                     {
                         $('#imgCuong').css('filter','brightness(20%)')
                         $('#imgThang').css('filter','brightness(100%)')
                     }
-                    else 
+                    else if(data.data.vote == 2)
                     {
                         $('#imgThang').css('filter','brightness(20%)')
                         $('#imgCuong').css('filter','brightness(100%)')
                     }
-    
+                    else
+                    {
+                        $('#imgThang').css('filter','brightness(100%)')
+                        $('#imgCuong').css('filter','brightness(100%)')
+                    }
                     $('#h5Username').text("Tài khoản: " + data.data.username)
                     $('#h5Province').text("Tỉnh/Thành phố: " + data.data.ten)
     
@@ -208,10 +217,10 @@ $(document).ready(function () {
     
                     resetAll();
     
-                     $("#btnToanQuoc").click(function() {
+                    $("#btnToanQuoc").click(function() {
                         resetAll();
                     })
-                    
+                    $("#left").css({"max-height": $("#map123").height()})
                     //Xu ly su kien Click tren Map
                     mymap.on('click',function(e){
                         checkPoint(e.latlng.lat, e.latlng.lng, (data) => {
@@ -369,8 +378,9 @@ $(document).ready(function () {
 });
 
 function voteFunc(votef) {
-    let user = JSON.parse(localStorage.getItem('user'))
-    vote(user.username, votef, (res) => {
+    // let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user1, votef)
+    vote(user1, votef, (res) => {
         console.log(res)
         if(res.success)
         {
@@ -378,13 +388,13 @@ function voteFunc(votef) {
             {
                 $('#imgCuong').css('filter','brightness(20%)')
                 $('#imgThang').css('filter','brightness(100%)')
-                alert("Vote cho Thắng thành công!")
+                alert("Bình chọn cho Thắng thành công!")
             }
-            else 
+            else if (votef == 2)
             {
                 $('#imgThang').css('filter','brightness(20%)')
                 $('#imgCuong').css('filter','brightness(100%)')
-                alert("Vote cho Cường thành công!")
+                alert("Bình chọn cho Cường thành công!")
             }
         }
         else

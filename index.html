@@ -17,10 +17,16 @@
     <script src="js/highcharts.src.js"></script>
     <title>Vietnam Idol</title>
     <style>
+        *{
+            padding: 0;
+            margin:0;
+        }
         #map123 {
             height: 100vh;
         }
-
+        #left{
+            overflow: auto;
+        }
         .leaflet-popup-content {
             width: 250px;
             height: 260px;
@@ -45,10 +51,9 @@
         <div class="col-md-4"></div>
     </div>
 
-    <div id="divIndex" class="row" style="padding: 2%; display: none;">
-        <button id="btnDangXuat" class="btn btn-danger">Đăng xuất</button>
+    <div id="divIndex" class="row" style="display: none;">
         <div id="idLogin" style="display: none;"></div>
-        <div class="col-md-3">
+        <div id="left" class="col-md-3" style="text-align: center; padding-right:0">
             <div class="row" style="text-align: center; margin-bottom: 5%">
                 <h3>Việt Nam ai đồ</h3>
                 <h4 id="province">Toàn quốc</h4>
@@ -56,12 +61,14 @@
 
             <div class="row" style="text-align: center;">
                 <div class="col-md-6">
-                    <img src="images/vote1.jpg" width="100px" height="100px" alt="">
-                    <label>Mr. Nguyễn Đức Thắng</label>
+                    <img src="images/vote1.jpg" width="60%" alt="">
+                    <div>Nguyễn Đức Thắng</div>
+                    <div>(SBD 01)</div>
                 </div>
                 <div class="col-md-6">
-                    <img src="images/vote2.png" width="100px" height="100px" alt="">
-                    <label>Mr. Đinh Việt Cường</label>
+                    <img src="images/vote2.png" width="60%" alt="">
+                    <div>Đinh Việt Cường</div>
+                    <div>(SBD 02)</div>
                 </div>
             </div>
 
@@ -74,20 +81,20 @@
                 </div>
             </div>
 
-            <div class="row" style="padding: 5%">
+            <div class="row" style="margin-bottom: 5%;">
                 <div>Dân số: <b id="danso"></b></div>
             </div>
 
-            <div class="row" style="padding-left: 5%">
-                <div>Số vote 1: <b id="vote1"></b></b></div>
+            <div class="row"    >
+                <div>Số bình chọn 01: <b id="vote1"></b></b></div>
             </div>
 
-            <div class="row" style="padding-left: 5%">
-                <div>Số vote 2: <b id="vote2"></b></b></div>
+            <div class="row"    >
+                <div>Số bình chọn 02: <b id="vote2"></b></b></div>
             </div>
 
-            <div class="row" style="padding-left: 5%">
-                <div>Chưa vote: <b id="chuavote"></b></b></div>
+            <div class="row">
+                <div>Chưa bình chọn: <b id="chuavote"></b></b></div>
             </div>
 
             <div class="row" style="padding: 5%; text-align: center">
@@ -96,29 +103,32 @@
             </div>
             
             <hr>
-            <div class="row" style="text-align: center; margin-bottom: 5%">
-                    <h4>Thông tin vote của bạn</h4>
+            <div class="row" style="text-align: center;">
+                    <h4>Thông tin bình chọn của bạn</h4>
                     <h5 id="h5Username">Tài khoản: </h5>
                     <h5 id="h5Province">Tỉnh/Thành phố: </h5>
                     <br>
                     <br>
                     <div class="row" style="text-align: center;">
                         <div class="col-md-6">
-                            <img onclick="voteFunc(1)" style="" id="imgThang" src="images/vote1.jpg" width="100px" height="100px" alt="">
-                            <label>Mr. Nguyễn Đức Thắng</label> <br>
+                            <img onclick="voteFunc(1)" style="cursor: pointer; filter: brightness(100%)" id="imgThang" src="images/vote1.jpg" width="60%" alt="">
+                            <div>Nguyễn Đức Thắng</div>
+                            <div>(SBD 01)</div>
                             <label class='label label-success' style="display: inline-block; width:50px; height:25px"></label>
                         </div>
                         <div class="col-md-6">
-                            <img onclick="voteFunc(2)" style="" id="imgCuong" src="images/vote2.png" width="100px" height="100px" alt="">
-                            <label>Mr. Đinh Việt Cường</label> <br>
+                            <img onclick="voteFunc(2)" style="cursor: pointer; filter: brightness(100%)" id="imgCuong" src="images/vote2.png" width="60%" alt="">
+                            <div>Đinh Việt Cường</div>
+                            <div>(SBD 02)</div>
                             <label class='label label-danger' style="display: inline-block; width:50px; height:25px"></label>
                         </div>
                     </div>
                     <br>
                     <br>
             </div>
+            <div style="text-align: center"><button id="btnDangXuat" class="btn btn-danger">Đăng xuất</button></div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" style="padding:0;">
             <div id="map123"></div>
         </div>
     </div>
@@ -149,7 +159,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnSignUpForm">Đăng ký</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
             </div>
           </div>
       
@@ -160,31 +170,31 @@
         <div class="modal-dialog">
       
           <!-- Modal content-->
-          <div class="modal-content">
+          <div class="modal-content" style="width: 700px">
             <div class="modal-header">
               <h4 class="modal-title">Biểu đồ</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6" style="text-align: center">
-                        <h5>Mr. Nguyễn Đức Thắng</h5>
+                    <div class="col-md-6" style="text-align: center; margin: 0 auto">
+                        <h5>Nguyễn Đức Thắng (SBD 01)</h5>
                         <br>
-                        <div id="chartGengerVote1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <div id="chartGengerVote1" style="min-width: 310px; height: 400px; max-width: 600px; width: 100%"></div>
                         <br>
 
                     </div>
 
-                    <div class="col-md-6" style="text-align: center">
-                        <h5>Mr. Đinh Việt Cường</h5>
+                    <div class="col-md-6" style="text-align: center; margin: 0 auto">
+                        <h5>Đinh Việt Cường (SBD 02)</h5>
                         <br>
-                        <div id="chartGengerVote2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <div id="chartGengerVote2" style="min-width: 310px; height: 400px; max-width: 600px; width: 100%"></div>
                         <br>
 
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
             </div>
           </div>
       
