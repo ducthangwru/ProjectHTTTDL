@@ -5,7 +5,6 @@ var listMaker = []
 var gid = 0
 var dataChartGenderVote1 = []
 var dataChartGenderVote2 = []
-var user1
 
 $(document).ready(function () {
     // $("#left").css({"max-height": $("#map123").height()})
@@ -153,16 +152,34 @@ $(document).ready(function () {
         localStorage.setItem("login", false)
         $('#divLogin').fadeIn(500);
         $('#divIndex').fadeOut(500);
+        location.reload();
     })
 
-    let isLogged = localStorage.getItem('login')
+    var isLogged = localStorage.getItem('login')
     if(isLogged == 'true')
     {
-        $('#divLogin').fadeOut(500);
-        $('#divIndex').fadeIn(800);
+        if($.parseJSON(localStorage.vote) == 1)
+        {
+            $('#imgCuong').css('filter','brightness(20%)')
+            $('#imgThang').css('filter','brightness(100%)')
+        }
+        else if($.parseJSON(localStorage.vote) == 2)
+        {
+            $('#imgThang').css('filter','brightness(20%)')
+            $('#imgCuong').css('filter','brightness(100%)')
+        }
+        else
+        {
+            $('#imgThang').css('filter','brightness(100%)')
+            $('#imgCuong').css('filter','brightness(100%)')
+        }
+        $('#h5Username').text("Tài khoản: " + $.parseJSON(localStorage.user).username)
+        $('#h5Province').text("Tỉnh/Thành phố: " + $.parseJSON(localStorage.user).ten)
+        $('#divLogin').hide();
+        $('#divIndex').show();
         initMap();
     }
-    else
+    else 
     {
         $('#divLogin').fadeIn(500);
         $('#divIndex').fadeOut(500);
@@ -176,6 +193,9 @@ $(document).ready(function () {
                 else
                 {
                     localStorage.setItem('login', true)
+                    localStorage.setItem("user", JSON.stringify(data.data))
+                    localStorage.setItem("vote", data.data.vote )
+                    console.log(localStorage.getItem("user",data.data.vote == 1))
                     user1 = data.data.username
                     if(data.data.vote == 1)
                     {
@@ -192,8 +212,8 @@ $(document).ready(function () {
                         $('#imgThang').css('filter','brightness(100%)')
                         $('#imgCuong').css('filter','brightness(100%)')
                     }
-                    $('#h5Username').text("Tài khoản: " + data.data.username)
-                    $('#h5Province').text("Tỉnh/Thành phố: " + data.data.ten)
+                    $('#h5Username').text("Tài khoản: " + $.parseJSON(localStorage.user).username)
+                    $('#h5Province').text("Tỉnh/Thành phố: " + $.parseJSON(localStorage.user).ten)
     
                     $('#divLogin').fadeOut(500);
                     $('#divIndex').fadeIn(800);
@@ -236,6 +256,7 @@ $(document).ready(function () {
                 {
                     gid = data.data.gid
                     let index = containsObject(data.data.gid, listMaker)
+                    console.log(index,data.data.gid,listMaker )
                     let vote = data.data.vote1 + data.data.vote2
                     let percentVote1 = (data.data.vote1 / vote) * 100
                     let percentVote2 = (data.data.vote2 / vote) * 100
@@ -354,7 +375,6 @@ $(document).ready(function () {
                 return i;
             }
         }
-    
         return -1;
     }
 
@@ -383,10 +403,11 @@ $(document).ready(function () {
 });
 
 function voteFunc(votef) {
-    // let user = JSON.parse(localStorage.getItem('user'))
-    console.log(user1, votef)
-    vote(user1, votef, (res) => {
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user.username, votef)
+    vote(user.username, votef, (res) => {
         console.log(res)
+        localStorage.setItem("vote", votef);
         if(res.success)
         {
             if(votef == 1)

@@ -36,6 +36,11 @@ $(document).ready(function () {
         $('#divUsers').fadeOut(500);
     })
 
+    $("#ipPassword , #ipUsername").on("keypress", function(e){
+        if (e.which == 13)
+            $("#btnLogin").click();
+    })
+
     var tableListProvice = $('#tableListProvince').DataTable({
         "pageLength": 100,
         dom: 'Bfrtip',
