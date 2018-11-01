@@ -265,3 +265,7 @@ function viewUsers(id, ten) {
     $('#divIndex').fadeOut(500);
     $('#divUsers').fadeIn(800);
 }
+
+$("#btnBack").click(function(){
+    location.reload();
+})
